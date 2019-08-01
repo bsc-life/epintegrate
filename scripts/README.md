@@ -1,8 +1,8 @@
 ## Content of the scripts
 
-#### find_optimal_resol_histones.py
+#### find_optimal_resPolMestresol_histones.py
 
-The data used in this script can be found at */gpfs/projects/bsc08/shared_projects/epideco/data/BINARIZE_files*
+The data used in this script can be found at */gpfs/projects/bsc08/shared_projects/epideco/data/BINARIZE_files*.  
 Histone Marks data from Naive B Cell, Plasma Cell, Germinal Center B-Cell and Class Switched Memory B Cell have been used.
 Two or three samples per cell type are available.
 This script finds the optimal resolution to be used so that the clusters are well formed.
