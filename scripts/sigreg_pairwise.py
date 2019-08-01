@@ -6,10 +6,15 @@ from sklearn.cluster import KMeans
 from scipy.stats.stats import pearsonr
 import itertools
 
+
+#This script uses the first eigenvector of hic matrices as data, only for the first chromosome and with a resolution of 100kb per bin
+#20 samples per cell type are present
+
 df = pd.read_csv('more_data.csv', sep=' ', header=None)
 x = df.values
 
 num_classes = 6
+genome_length = 2490
 
 def calinski_harabasz_score(X, labels):
 	n_samples, _ = X.shape
@@ -29,11 +34,11 @@ def get_importance_vector(i,j):
 	xlist = list(x)
 	data = xlist[20*i:20*(i+1)] + xlist[20*j:20*(j+1)]
 	data = np.array(data)
-	importance_vector = np.zeros(2490)
-	occurrence_vector = np.zeros(2490)
+	importance_vector = np.zeros(genome_length)
+	occurrence_vector = np.zeros(genome_length)
 	num_samples = 100000
-	remaining_percentage = 0.01
-	remaining_number = int(2490*remaining_percentage)
+	remaining_percentage = 0.01 #We only take 1% of the data. And the clusters still form!
+	remaining_number = int(genome_length*remaining_percentage)
 
 	
 	for i in range(num_samples):
@@ -69,7 +74,7 @@ def get_importance_vector(i,j):
 			importance_vector[i] = 0
 	return importance_vector
 
-imp_matrix = np.zeros((num_classes, num_classes, 2490))
+imp_matrix = np.zeros((num_classes, num_classes, genome_length))
 for i in range(num_classes):
 	for j in range(i, num_classes):
 		imp_matrix[i][j] = get_importance_vector(i, j)
@@ -77,19 +82,40 @@ for i in range(num_classes):
 
 #np.savetxt('imp_matrix.txt', imp_matrix)
 
-df = pd.DataFrame()
-for i in range(6):
-	for j in range(6):
-		df[str(i) + '_' + str(j)] = imp_matrix[i][j]
 
-correlations = {}
+def get_common_regions():
+	#Common most important regions between two transitions
+	correlations = {}
 
-columns = df.columns.tolist()
-for col_a, col_b in itertools.combinations(columns, 2):
-	correlations[col_a + '__' + col_b] = pearsonr(df.loc[:,col_a], df.loc[:,col_b])
+	for i in range(num_classes):
+		for j in range(i+1, num_classes):
+			for k in range(num_classes):
+				for l in range(k+1, num_classes):
+					if (set([i,j]) != set([k,l])):
+						a = set(imp_matrix[i][j].argsort()[-20:]) #We take the 20 most "important" positions
+						b = set(imp_matrix[k][l].argsort()[-20:])
+						correlations[str(i) + '->' + str(j) + ':' + str(k) + '->' + str(l)] = len(a.intersection(b)) / len(a.union(b))
+	
+	return correlations
+						
+def get_correlations():
+	#Correlations between importance vectors associated to two transitions
+	df = pd.DataFrame()
+	for i in range(6):
+		for j in range(6):
+			df[str(i) + '_' + str(j)] = imp_matrix[i][j]
+
+	correlations = {}
+
+	columns = df.columns.tolist()
+	for col_a, col_b in itertools.combinations(columns, 2):
+		correlations[col_a + '__' + col_b] = pearsonr(df.loc[:,col_a], df.loc[:,col_b])
+
+	return correlations
 
 
-print(correlations)
+#print(get_correlations())
+print(get_common_regions())
 
 
 
