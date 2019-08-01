@@ -9,7 +9,7 @@ This script finds the optimal resolution to be used so that the clusters are wel
 This is done by checking the accuracy of the clusters formed and by optimizing a cluster quality metric: Calinski-Harabasz Index
 
 #### significant_regions_histones.py
-By taking the optimal resolution found in *find_optimal_resol_histones.py*, this script finds an importance vector associated to the clustering of all the data.
+By taking the optimal resolution found in *find_optimal_resol_histones.py*, this script finds an importance vector associated to the clustering of all the data.  
 First we take the original data from */gpfs/projects/bsc08/shared_projects/epideco/data/BINARIZE_files* 
 and turn it to the optimal resolution.  
 Then we successively subsample the data randomly and check the quality of the clustering.  
