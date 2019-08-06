@@ -17,7 +17,7 @@ We eventually get a genome-wide vector in which each component represents the "i
 
 #### sigreg_pairwise.py
 This script uses the first eigenvector of the hic-matrix of chromatin interactions for different cell types.
-We used CLL_1525, CLL_110, CLL_12, MBC, NBC, GCBC and PBC data
+We used CLL_1525, CLL_110, CLL_12, MBC, NBC, GCBC and PBC data.  
 A similar algorithm to the one used for histone marks is implemented to get an importance vector.
 Note that the importance vectors might have different lengths because different resolutions might have been used.
 
