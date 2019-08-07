@@ -105,7 +105,7 @@ for k in range(num_classes):
 		order_matrix[k][l] = order
 	
 
-
+np.savetxt('order_matrix.csv', order_matrix)
 
 
 
