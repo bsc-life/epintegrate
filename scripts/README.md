@@ -27,3 +27,9 @@ We randomly add noise (or anulate) regions of the matrix and use the distorted m
 that tries to reconstruct the original matrix.  
 At the end of training, we use the loss function the autoencoder has optimized to check how well the reconstruction went.
 Eventually we get a matrix of reconstruction performance for each interaction.
+
+#### esotheric.py
+Script that implements a probably esotheric idea to find out the order of the changes in epigenetic marks during a transition between two cell types. It is implemented using the Hi-C data we previously described.  
+The idea is to choose the sequence that, at any timestep, the series of changes done up to that point don't result in the epigenetic profile being similar to a cell type different to the two involved in the transition.  
+The one that maximizes this difference to the other cell types is the one we choose.  
+We do that for every possible transition between two cell types.
