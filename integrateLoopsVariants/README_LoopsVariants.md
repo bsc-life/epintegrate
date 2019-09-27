@@ -71,6 +71,11 @@ Randomization using all available variants in the GWAS catalog, taking 244 (or n
 Reads table of intersecting loops with variants and annotates both the region of the loop with the variant and the region of the loop complementary to the variant. Annotates the regions without extending their ends (0 KB extended) and using the annotatr Bioconductor package. Writes a table with the loops regions where the variants fall and another table with the complementary regions. Also writes a table with the loops regions with the variants annotated and a table with the complementary regions annotated.
 
 ### scriptGlobalPlot_v2.R
+Script to generate global plot including all tracks: presence/counts of loops, genomic context of the region in contact with the SNP for that loop, p-value of the SNP, odds ratio, risk allele frequency, source database and genomic context of the SNP. Requires the following input files:  
+
+* CSV with intersection loops - variants
+* CSV with all variants
+* CSV with annotations for the regions of the loops in contact with the variants (from scriptComplementaryAnnotation.R)
 
 ### scriptCCscore.R
 
